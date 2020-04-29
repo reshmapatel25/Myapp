@@ -1,5 +1,27 @@
+<!-- Workshop Part 3-->
 <h2>My Recipes</h2>
-<ul class="recipes">
+  <ul class="Recipes">
+    <li *ngFor="let recipe of recipes"
+      [class.selected]="recipe === selectedRecipe"
+      (click)="onSelect(recipe)">
+
+      <span class="badge">
+        
+        {{recipe.id}}
+
+      </span> 
+      
+      {{recipe.name}}    
+    
+    </li>
+  </ul>
+
+  <app-recipe-detail [recipe]="selectedRecipe"></app-recipe-detail>
+
+
+<!-- Workshop Part2 
+  <h2>My Recipes</h2>
+  <ul class="recipes">
   <li *ngFor="let recipe of recipes"
     [class.selected]="recipe === selectedRecipe"
     (click)="onSelect(recipe)">
@@ -18,9 +40,9 @@
   </div>
 
 </div>
+-->
 
-
-<!-- <p>recipes works!</p>
+<!-- Workshop Part 1<p>recipes works!</p>
 //{{recipe}} -->
 
 <!-- <h2>{{recipe.name | uppercase }} Details</h2>

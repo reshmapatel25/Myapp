@@ -20,8 +20,8 @@ export class RecipesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSelect(hero: Recipe): void {
-    this.selectedRecipe = hero;
+  onSelect(recipe: Recipe): void {
+    this.selectedRecipe = recipe;
   }
 
 }

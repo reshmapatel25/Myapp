@@ -23,9 +23,19 @@ export class RecipesComponent implements OnInit {
 
   constructor(private recipeService: RecipeService)  { }
 
+  /* Synchronous way
+  
   getRecipes(): void {
     this.recipes = this.recipeService.getRecipes();
+  }*/
+
+  // Asynchronous way
+
+  getRecipes(): void {
+    this.recipeService.getRecipes()
+        .subscribe(recipes => this.recipes = recipes);
   }
+  
   
   ngOnInit(): void {
     this.getRecipes();

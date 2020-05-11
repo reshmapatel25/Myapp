@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe';
 //import { RECIPES } from '../mock-recipes';
 import { RecipeService } from '../recipe.service';
+import {MessageService} from '../message.service';
 
 
 @Component({
@@ -10,6 +11,27 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipes.component.scss']
 })
 export class RecipesComponent implements OnInit {
+  selectedRecipe: Recipe;
+  recipes: Recipe[];
+
+  constructor(private recipeService: RecipeService, private messageService: MessageService) { }
+
+
+  ngOnInit() { this.getRecipes();  }
+ 
+   onSelect(recipe: Recipe): void {
+    this.selectedRecipe = recipe;
+    this.messageService.add(`RecipeService: Selected recipe id=${recipe.id}`);
+    
+  }
+ 
+  getRecipes(): void {
+    this.recipeService.getRecipes()
+        .subscribe(recipes => this.recipes = recipes);
+  }
+}
+//Workshop- 3
+/*export class RecipesComponent implements OnInit {
   //recipe='Indian Curry';
   /*recipe: Recipe = {
     id: 1,
@@ -17,11 +39,11 @@ export class RecipesComponent implements OnInit {
   };*/
   // recipes=RECIPES;
   
-  recipes: Recipe[];
+  /*recipes: Recipe[];
   
   selectedRecipe: Recipe;
 
-  constructor(private recipeService: RecipeService)  { }
+  /*constructor(private recipeService: RecipeService)  { }
 
   /* Synchronous way
   
@@ -31,7 +53,7 @@ export class RecipesComponent implements OnInit {
 
   // Asynchronous way
 
-  getRecipes(): void {
+  /*getRecipes(): void {
     this.recipeService.getRecipes()
         .subscribe(recipes => this.recipes = recipes);
   }
@@ -46,3 +68,4 @@ export class RecipesComponent implements OnInit {
   }
 
 }
+*/

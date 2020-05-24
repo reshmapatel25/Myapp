@@ -1,6 +1,16 @@
 <!-- Workshop Part 3-->
 <h2>My Recipes</h2>
+
 <ul class="recipes">
+  <li *ngFor="let recipe of recipes">
+    <a routerLink="/detail/{{recipe.id}}">
+      <span class="badge">{{recipe.id}}</span> {{recipe.name}}
+    </a>
+  </li>
+</ul>
+
+
+<!--<ul class="recipes">
   <li *ngFor="let recipe of recipes"
       [class.selected]="recipe === selectedRecipe"
       (click)="onSelect(recipe)">
@@ -10,7 +20,7 @@
 </ul>
 
 <app-recipe-detail [recipe]="selectedRecipe"></app-recipe-detail>
-
+-->
 
 <!-- Workshop Part2 
   <h2>My Recipes</h2>

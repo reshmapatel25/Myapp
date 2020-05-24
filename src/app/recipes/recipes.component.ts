@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe';
 //import { RECIPES } from '../mock-recipes';
 import { RecipeService } from '../recipe.service';
-import {MessageService} from '../message.service';
+//import {MessageService} from '../message.service';
 
 
 @Component({
@@ -10,6 +10,21 @@ import {MessageService} from '../message.service';
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.scss']
 })
+export class RecipesComponent implements OnInit {
+  recipes: Recipe[];
+  
+  constructor(private recipeService: RecipeService) { }
+
+  ngOnInit() {
+    this.getRecipes();
+  }
+  getRecipes(): void {
+    this.recipeService.getRecipes()
+    .subscribe(recipes => this.recipes = recipes);
+  }
+}
+
+/* Workshop-4
 export class RecipesComponent implements OnInit {
   selectedRecipe: Recipe;
   recipes: Recipe[];
@@ -29,7 +44,8 @@ export class RecipesComponent implements OnInit {
     this.recipeService.getRecipes()
         .subscribe(recipes => this.recipes = recipes);
   }
-}
+}*/
+
 //Workshop- 3
 /*export class RecipesComponent implements OnInit {
   //recipe='Indian Curry';

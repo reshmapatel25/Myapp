@@ -22,6 +22,20 @@ export class RecipesComponent implements OnInit {
     this.recipeService.getRecipes()
     .subscribe(recipes => this.recipes = recipes);
   }
+  add(name: string): void {
+    name = name.trim();
+    if (!name) { return; }
+    this.recipeService.addRecipe({ name } as Recipe)
+      .subscribe(recipe => {
+        this.recipes.push(recipe);
+      });
+  }
+  delete(recipe: Recipe): void {
+    this.recipes = this.recipes.filter(h => h !== recipe);
+    this.recipeService.deleteRecipe(recipe).subscribe();
+  }
+  
+  
 }
 
 /* Workshop-4

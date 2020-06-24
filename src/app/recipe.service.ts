@@ -11,7 +11,10 @@ import { catchError, map, tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class RecipeService {
-
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+  
  /* constructor() { }
   
   getRecipes(): Observable<Recipe[]> {
@@ -57,6 +60,45 @@ getRecipe(id: number): Observable<Recipe> {
     catchError(this.handleError<Recipe>(`getRecipe id=${id}`))
   );
 }
+/** PUT: update the hero on the server */
+updateRecipe(recipe: Recipe): Observable<any> {
+  return this.http.put(this.recipesUrl, recipe, this.httpOptions).pipe(
+    tap(_ => this.log(`updated recipe id=${recipe.id}`)),
+    catchError(this.handleError<any>('updateRecipe'))
+  );
+}
+/** POST: add a new recipe to the server */
+addRecipe(recipe: Recipe): Observable<Recipe> {
+  return this.http.post<Recipe>(this.recipesUrl, recipe, this.httpOptions).pipe(
+    tap((newRecipe: Recipe) => this.log(`added recipe w/ id=${newRecipe.id}`)),
+    catchError(this.handleError<Recipe>('addRecipe'))
+  );
+}
+/** DELETE: delete the recipe from the server */
+deleteRecipe(recipe: Recipe | number): Observable<Recipe> {
+  const id = typeof recipe === 'number' ? recipe : recipe.id;
+  const url = `${this.recipesUrl}/${id}`;
+
+  return this.http.delete<Recipe>(url, this.httpOptions).pipe(
+    tap(_ => this.log(`deleted recipe id=${id}`)),
+    catchError(this.handleError<Recipe>('deleteRecipe'))
+  );
+}
+/* GET recipees whose name contains search term */
+searchRecipes(term: string): Observable<Recipe[]> {
+  if (!term.trim()) {
+    // if not search term, return empty recipe array.
+    return of([]);
+  }
+  return this.http.get<Recipe[]>(`${this.recipesUrl}/?name=${term}`).pipe(
+    tap(x => x.length ?
+       this.log(`found recipes matching "${term}"`) :
+       this.log(`no recipes matching "${term}"`)),
+    catchError(this.handleError<Recipe[]>('searchRecipes', []))
+  );
+}
+
+
 
   /** Log a RecipeService message with the MessageService */
 private log(message: string) {
